@@ -24,11 +24,11 @@ async def create_item(data: Data):
         data = data.data
         for item in data:
 
-            # print(item.points, item.C_ygz, item.Ce)
-            youxiao, reason, _, _ = judge_youxiao(item.points, item.C_ygz, item.Ce) 
+            youxiao, reason, reason_s, _ = judge_youxiao(item.points, item.C_ygz, item.Ce) 
             ret['result'].append(dict({
                 'if_youxiao': youxiao,
-                'reason': reason.tolist()
+                'reason': reason_s,
+                'explain': reason_s
             }))
     except Exception:
           raise HTTPException(status_code=404, detail="参数错误")

@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 
 def judge_youxiao(sj, C_ygz, Ce):
 
-    sj = [int(i) for i in sj.split(',')[:-1]]
+    # sj = [int(i) for i in sj.split(',')[:-1]]
     sj = np.array([sj])
     sj = sj.T
     C_ygz=np.array([C_ygz])   ; #荧光值
