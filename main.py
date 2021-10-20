@@ -4,7 +4,7 @@ from judge import judge_youxiao
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from datetime import datetime
 import pymongo
 from starlette.responses import FileResponse
@@ -68,3 +68,12 @@ async def read_item():
             f.write('\n')
     file_location = 'data.csv'
     return FileResponse(file_location, media_type='application/octet-stream',filename='data.csv')
+
+
+
+@app.get("/")
+async def read_item():
+    return HTMLResponse(
+        '<button "><a href="/download"> download</a> </button>'
+    )
+
