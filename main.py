@@ -5,6 +5,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+import pymongo
 class Item(BaseModel):
     C_ygz: int
     Ce: int
@@ -13,8 +14,9 @@ class Item(BaseModel):
 class Data(BaseModel):
     data: List[Item]
 app = FastAPI()
-
-
+client = pymongo.MongoClient('localhost')
+db = client['api']
+table = db['data']
 @app.post("/data/")
 async def create_item(data: Data):
     try:
@@ -22,6 +24,7 @@ async def create_item(data: Data):
             'result': []
         } 
         data = data.data
+        print(data)
         for item in data:
 
             youxiao, reason, reason_s, _ = judge_youxiao(item.points, item.C_ygz, item.Ce) 
@@ -30,6 +33,7 @@ async def create_item(data: Data):
                 'reason': reason_s,
                 'explain': reason_s
             }))
+             
     except Exception:
           raise HTTPException(status_code=404, detail="参数错误")
     return JSONResponse(content=ret)
